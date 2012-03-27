@@ -11,6 +11,7 @@ import java.util.LinkedList
 
 import org.scalatest._
 
+import scala.util.Random
 import scala.collection.JavaConversions._
 
 
@@ -25,83 +26,83 @@ class IterationPerformanceSpec extends FreeSpec
   "timing collections" in {
 
     time("scala.Array, while-loop, counter", scalaArray) { array =>
-      var acc = 0
+      var acc: Byte = 0
       var counter = 0
       while (counter < array.length) {
-        acc += array(counter)
+        acc = max(acc, array(counter))
         counter += 1
       }
       acc
     }
 
     time("scala.Array, foreach-loop, counter", scalaArray) { array =>
-      var acc = 0
-      array.foreach { value => acc += value }
+      var acc: Byte = 0
+      array.foreach { value => acc = max(acc, value) }
       acc
     }
 
     time("fj.data.List, foldLeft1", fjList) {
       _.foldLeft1(
-          new F2[Int, Int, Int] {
-            override def f(a: Int, b: Int): Int = a + b
+          new F2[Byte, Byte, Byte] {
+            override def f(a: Byte, b: Byte): Byte = max(a, b)
           }.curry
         )
     }
 
     time("java.util.LinkedList, while-loop, iterator", javaList) { list =>
-      var acc = 0
+      var acc: Byte = 0
       val iter = list.iterator
-      while (iter.hasNext) { acc += iter.next }
+      while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
     time("scala.collection.immutable.List, while-loop, iterator",
          scalaList) { list =>
-      var acc = 0
+      var acc: Byte = 0
       val iter = list.iterator
-      while (iter.hasNext) { acc += iter.next }
+      while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
     time("scala.collection.immutable.List, foldLeft", scalaList) { list =>
-      list.foldLeft(0) { (_: Int) + (_: Int) }
+      list.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
     time("scala.collection.immutable.Vector, while-loop, iterator",
          scalaVector) { vector =>
-      var acc = 0
+      var acc: Byte = 0
       val iter = vector.iterator
-      while (iter.hasNext) { acc += iter.next }
+      while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
     time("scala.collection.immutable.Vector, foldLeft", scalaVector) { vector =>
-      vector.foldLeft(0) { (_: Int) + (_: Int) }
+      vector.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
   }
 
-  def fjList: FJList[Int] = {
-    var list = FJList.nil[Int]
-    (1 to SIZE).foreach {
-      i => list = list.cons(i)
-    }
+  val scalaArray: Array[Byte] = {
+    val array = new Array[Byte](SIZE)
+    Random.nextBytes(array)
+    array
+  }
+
+  val scalaList: List[Byte] = List(scalaArray:_*)
+
+  val scalaVector: Vector[Byte] = Vector(scalaArray:_*)
+
+  def fjList: FJList[Byte] = {
+    var list = FJList.nil[Byte]
+    scalaVector.foreach { i => list = list.cons(i) }
     list
   }
 
-  def javaList: LinkedList[Int] = {
-    val list = new LinkedList[Int]()
-    (1 to SIZE).foreach {
-      i => list.add(i)
-    }
+  def javaList: LinkedList[Byte] = {
+    val list = new LinkedList[Byte]()
+    scalaVector.foreach { i => list.add(i) }
     list
   }
-
-  val scalaList: List[Int] = List.range(0, SIZE)
-
-  val scalaArray: Array[Int] = Array.range(0, SIZE)
-
-  val scalaVector: Vector[Int] = Vector.range(0, SIZE)
 
   def time[S, T[_]](msg: String, col: T[S])(calc: T[S] => S) {
     time(NUM_JVM_WARMUP_TRIALS, calc(col))
@@ -118,5 +119,7 @@ class IterationPerformanceSpec extends FreeSpec
       sw.elapsedTime(MICROSECONDS) / 1000.0
     }.sum / n
   }
+
+  def max(a: Byte, b: Byte) = if (a > b) a else b
 
 }
