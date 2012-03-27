@@ -12,3 +12,5 @@ libraryDependencies ++= Seq(
   "org.functionaljava" % "functionaljava" % "3.0",
   "org.scalatest" %% "scalatest" % "1.7.1" % "test"
 )
+
+parallelExecution in Test := false

@@ -1,5 +1,6 @@
 package com.github.shajra.learning.scala.performance
 
+import akka.util.ByteString
 
 import com.google.common.base.Stopwatch
 
@@ -56,6 +57,18 @@ class IterationPerformanceSpec extends FreeSpec
       acc
     }
 
+    time("scala.collection.immutable.Vector, while-loop, iterator",
+         scalaVector) { vector =>
+      var acc: Byte = 0
+      val iter = vector.iterator
+      while (iter.hasNext) { acc = max(acc, iter.next) }
+      acc
+    }
+
+    time("scala.collection.immutable.Vector, foldLeft", scalaVector) { vector =>
+      vector.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    }
+
     time("scala.collection.immutable.List, while-loop, iterator",
          scalaList) { list =>
       var acc: Byte = 0
@@ -68,16 +81,16 @@ class IterationPerformanceSpec extends FreeSpec
       list.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
-    time("scala.collection.immutable.Vector, while-loop, iterator",
-         scalaVector) { vector =>
+    time("akka.util.ByteString, while-loop, iterator",
+         akkaByteString) { string =>
       var acc: Byte = 0
-      val iter = vector.iterator
+      val iter = string.iterator
       while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
-    time("scala.collection.immutable.Vector, foldLeft", scalaVector) { vector =>
-      vector.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    time("akka.util.ByteString, foldLeft", akkaByteString) { string =>
+      string.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
   }
@@ -91,6 +104,8 @@ class IterationPerformanceSpec extends FreeSpec
   val scalaList: List[Byte] = List(scalaArray:_*)
 
   val scalaVector: Vector[Byte] = Vector(scalaArray:_*)
+
+  val akkaByteString: ByteString = ByteString(scalaArray)
 
   def fjList: FJList[Byte] = {
     var list = FJList.nil[Byte]
