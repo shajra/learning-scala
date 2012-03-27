@@ -18,9 +18,9 @@ class IterationPerformanceSpec extends FreeSpec
     with OneInstancePerTest
     with matchers.ShouldMatchers {
 
-  val SUM_TO = 1000000
-
+  val SIZE = 1000000
   val NUM_JVM_WARMUP_TRIALS = 500
+  val NUM_TIMED_TRIALS = 10
 
   "timing collections" in {
 
@@ -83,7 +83,7 @@ class IterationPerformanceSpec extends FreeSpec
 
   def fjList: FJList[Int] = {
     var list = FJList.nil[Int]
-    (1 to SUM_TO).foreach {
+    (1 to SIZE).foreach {
       i => list = list.cons(i)
     }
     list
@@ -91,29 +91,32 @@ class IterationPerformanceSpec extends FreeSpec
 
   def javaList: LinkedList[Int] = {
     val list = new LinkedList[Int]()
-    (1 to SUM_TO).foreach {
+    (1 to SIZE).foreach {
       i => list.add(i)
     }
     list
   }
 
-  val scalaList: List[Int] = List.range(0, SUM_TO)
+  val scalaList: List[Int] = List.range(0, SIZE)
 
-  val scalaArray: Array[Int] = Array.range(0, SUM_TO)
+  val scalaArray: Array[Int] = Array.range(0, SIZE)
 
-  val scalaVector: Vector[Int] = Vector.range(0, SUM_TO)
+  val scalaVector: Vector[Int] = Vector.range(0, SIZE)
 
   def time[S, T[_]](msg: String, col: T[S])(calc: T[S] => S) {
-    val sw = new Stopwatch()
-    warmup(calc(col))
-    sw.start()
-    calc(col)
-    sw.stop()
-    val time = sw.elapsedTime(MICROSECONDS) / 1000.0
-    println(msg + ": " + time + " ms")
+    time(NUM_JVM_WARMUP_TRIALS, calc(col))
+    val ms = time(NUM_TIMED_TRIALS, calc(col))
+    println(msg + ": " + ms + " ms")
   }
 
-  def warmup[T](calc: => T) =
-    for (_ <- 1 to NUM_JVM_WARMUP_TRIALS) yield calc
+  def time[S, T[_]](n: Int, calc: => S) = {
+    Vector.fill(n) {
+      val sw = new Stopwatch()
+      sw.start()
+      calc
+      sw.stop()
+      sw.elapsedTime(MICROSECONDS) / 1000.0
+    }.sum / n
+  }
 
 }
