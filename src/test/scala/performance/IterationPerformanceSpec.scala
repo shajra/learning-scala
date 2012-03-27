@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
 
 class IterationPerformanceSpec extends FunSuite {
 
-  val SUM_TO = 100000
+  val SUM_TO = 1000000
 
   val NUM_JVM_WARMUP_TRIALS = 500
 
@@ -60,6 +60,18 @@ class IterationPerformanceSpec extends FunSuite {
       list.foldLeft(0) { (_: Int) + (_: Int) }
     }
 
+    time("scala.collection.immutable.Vector, while-loop, iterator",
+         scalaVector) { vector =>
+      var acc = 0
+      val iter = vector.iterator
+      while (iter.hasNext) { acc += iter.next }
+      acc
+    }
+
+    time("scala.collection.immutable.Vector, foldLeft", scalaVector) { vector =>
+      vector.foldLeft(0) { (_: Int) + (_: Int) }
+    }
+
   }
 
   def fjList: FJList[JInteger] = {
@@ -78,9 +90,11 @@ class IterationPerformanceSpec extends FunSuite {
     list
   }
 
-  def scalaList: List[Int] = List.range(0, SUM_TO)
+  val scalaList: List[Int] = List.range(0, SUM_TO)
 
-  def scalaArray: Array[Int] = Array.range(0, SUM_TO)
+  val scalaArray: Array[Int] = Array.range(0, SUM_TO)
+
+  val scalaVector: Vector[Int] = Vector.range(0, SUM_TO)
 
   def time[S, T[_]](msg: String, col: T[S])(calc: T[S] => S) {
     val sw = new Stopwatch()
