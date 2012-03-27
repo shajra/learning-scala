@@ -4,24 +4,25 @@ package com.github.shajra.learning.scala.performance
 import com.google.common.base.Stopwatch
 
 import fj.data.{List => FJList}
-import fj.function.Integers
+import fj.F2
 
-import java.lang.{Integer => JInteger}
 import java.util.concurrent.TimeUnit._
 import java.util.LinkedList
 
-import org.scalatest.FunSuite
+import org.scalatest._
 
 import scala.collection.JavaConversions._
 
 
-class IterationPerformanceSpec extends FunSuite {
+class IterationPerformanceSpec extends FreeSpec
+    with OneInstancePerTest
+    with matchers.ShouldMatchers {
 
   val SUM_TO = 1000000
 
   val NUM_JVM_WARMUP_TRIALS = 500
 
-  test("timing collections") {
+  "timing collections" in {
 
     time("scala.Array, while-loop, counter", scalaArray) { array =>
       var acc = 0
@@ -39,7 +40,13 @@ class IterationPerformanceSpec extends FunSuite {
       acc
     }
 
-    time("fj.data.List, foldLeft1", fjList) { _.foldLeft1(Integers.add) }
+    time("fj.data.List, foldLeft1", fjList) {
+      _.foldLeft1(
+          new F2[Int, Int, Int] {
+            override def f(a: Int, b: Int): Int = a + b
+          }.curry
+        )
+    }
 
     time("java.util.LinkedList, while-loop, iterator", javaList) { list =>
       var acc = 0
@@ -74,8 +81,8 @@ class IterationPerformanceSpec extends FunSuite {
 
   }
 
-  def fjList: FJList[JInteger] = {
-    var list = FJList.nil[JInteger]
+  def fjList: FJList[Int] = {
+    var list = FJList.nil[Int]
     (1 to SUM_TO).foreach {
       i => list = list.cons(i)
     }
