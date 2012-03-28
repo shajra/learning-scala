@@ -26,20 +26,24 @@ class IterationPerformanceSpec extends FreeSpec
 
   "timing collections" in {
 
-    time("scala.Array, while-loop, counter", scalaArray) { array =>
+    time("scala.Array, while-loop, counter", scalaArray) { col =>
       var acc: Byte = 0
       var counter = 0
-      while (counter < array.length) {
-        acc = max(acc, array(counter))
+      while (counter < col.length) {
+        acc = max(acc, col(counter))
         counter += 1
       }
       acc
     }
 
-    time("scala.Array, foreach-loop, counter", scalaArray) { array =>
+    time("scala.Array, foreach-loop, counter", scalaArray) { col =>
       var acc: Byte = 0
-      array.foreach { value => acc = max(acc, value) }
+      col.foreach { value => acc = max(acc, value) }
       acc
+    }
+
+    time("scala.Array, foldLeft", scalaArray) { col =>
+      col.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
     time("fj.data.List, foldLeft1", fjList) {
@@ -50,47 +54,62 @@ class IterationPerformanceSpec extends FreeSpec
         )
     }
 
-    time("java.util.LinkedList, while-loop, iterator", javaList) { list =>
+    time("java.util.LinkedList, while-loop, iterator", javaList) { col =>
       var acc: Byte = 0
-      val iter = list.iterator
+      val iter = col.iterator
       while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
-    time("scala.collection.immutable.Vector, while-loop, iterator",
-         scalaVector) { vector =>
+    time("scala.collection.immutable.Vector, while-loop, iterator", scalaVector) { col =>
       var acc: Byte = 0
-      val iter = vector.iterator
+      val iter = col.iterator
       while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
-    time("scala.collection.immutable.Vector, foldLeft", scalaVector) { vector =>
-      vector.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    time("scala.collection.immutable.Vector, foreach-loop, counter", scalaVector) { col =>
+      var acc: Byte = 0
+      col.foreach { value => acc = max(acc, value) }
+      acc
     }
 
-    time("scala.collection.immutable.List, while-loop, iterator",
-         scalaList) { list =>
+    time("scala.collection.immutable.Vector, foldLeft", scalaVector) { col =>
+      col.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    }
+
+    time("scala.collection.immutable.List, while-loop, iterator", scalaList) { col =>
       var acc: Byte = 0
-      val iter = list.iterator
+      val iter = col.iterator
       while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
-    time("scala.collection.immutable.List, foldLeft", scalaList) { list =>
-      list.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    time("scala.collection.immutable.List, foreach-loop, counter", scalaList) { col =>
+      var acc: Byte = 0
+      col.foreach { value => acc = max(acc, value) }
+      acc
     }
 
-    time("akka.util.ByteString, while-loop, iterator",
-         akkaByteString) { string =>
+    time("scala.collection.immutable.List, foldLeft", scalaList) { col =>
+      col.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    }
+
+    time("akka.util.ByteString, while-loop, iterator", akkaByteString) { col =>
       var acc: Byte = 0
-      val iter = string.iterator
+      val iter = col.iterator
       while (iter.hasNext) { acc = max(acc, iter.next) }
       acc
     }
 
-    time("akka.util.ByteString, foldLeft", akkaByteString) { string =>
-      string.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    time("akka.util.ByteString, foreach-loop, counter", akkaByteString) { col =>
+      var acc: Byte = 0
+      col.foreach { value => acc = max(acc, value) }
+      acc
+    }
+
+    time("akka.util.ByteString, foldLeft", akkaByteString) { col =>
+      col.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
     }
 
   }
