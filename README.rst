@@ -2,7 +2,7 @@ Learning Scala
 ==============
 
 This is a project where I plan to aggregate small pieces of code to help
-communicate what I've learned while studying `Scala <http://scala-lang.org>`.
+communicate what I've learned while studying `Scala <http://scala-lang.org>`_.
 
 
 Organization
@@ -25,10 +25,10 @@ complete discussions to single files so they read more like short articles.
 Build/Execution
 ---------------
 
-This project builds with `SBT <https://github.com/harrah/xsbt>`, which is
+This project builds with `SBT <https://github.com/harrah/xsbt>`_, which is
 extremely powerful and for simple projects like this one pretty easy to use.
 The documentation for SBT is pretty good now, so see `SBT's Getting Starting
-Guide <https://github.com/harrah/xsbt/wiki/Getting-Started-Welcome>` for
+Guide <https://github.com/harrah/xsbt/wiki/Getting-Started-Welcome>`_ for
 details on running the tool.
 
 The nice part about SBT is you really don't need much on your system beyond a
