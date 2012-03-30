@@ -8,7 +8,7 @@ package inheritance {
 
   trait HasArea { val area: Double }
 
-  sealed abstract class Shape extends HasArea
+  sealed trait Shape extends HasArea
 
   case class Rectangle(w: Double, h: Double) extends Shape { val area = w * h }
 
@@ -29,15 +29,13 @@ package typeclass {
 
   object AreaProvider {
 
-    implicit val forRectangle: AreaProvider[Rectangle] =
-      new AreaProvider[Rectangle] {
-        def area(rectangle: Rectangle) = rectangle.w * rectangle.h
-      }
+    implicit object RectangleAreaProvider extends AreaProvider[Rectangle] {
+      def area(rectangle: Rectangle) = rectangle.w * rectangle.h
+    }
 
-    implicit val forSquare: AreaProvider[Square] =
-      new AreaProvider[Square] {
-        def area(square: Square) = square.s * square.s
-      }
+    implicit object SquareAreaProvider extends AreaProvider[Square] {
+      def area(square: Square) = square.s * square.s
+    }
 
   }
 
@@ -46,7 +44,7 @@ package typeclass {
 
 package object typeclass {
 
-  implicit def any2HasArea[A: AreaProvider](shape: A) = new HasArea {
+  implicit def any2HasArea[A : AreaProvider](shape: A) = new HasArea {
     val areaProvider = implicitly[AreaProvider[A]]
     val area = areaProvider.area(shape)
   }

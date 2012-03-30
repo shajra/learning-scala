@@ -14,7 +14,7 @@ import scala.util.Random
 
 object Collections {
 
-  val SIZE = 1000000
+  val SIZE = 10000000
 
   val scalaArray: Array[Byte] = {
     val array = new Array[Byte](SIZE)
@@ -29,14 +29,12 @@ object Collections {
   val akkaByteString: ByteString = ByteString(scalaArray)
 
   def fjList: FJList[Byte] = {
-    var list = FJList.nil[Byte]
-    scalaVector.foreach { i => list = list.cons(i) }
-    list
+    scalaList.foldLeft(FJList.nil[Byte]) { _ cons _ }
   }
 
   def javaList: LinkedList[Byte] = {
     val list = new LinkedList[Byte]()
-    scalaVector.foreach { i => list.add(i) }
+    scalaList.foreach { i => list.add(i) }
     list
   }
 
@@ -62,7 +60,7 @@ object Operations {
   }
 
   def scalaFoldLeftMax(col: Traversable[Byte]) =
-    col.foldLeft(0: Byte) { max(_: Byte, _: Byte) }
+    col.foldLeft(0: Byte) { max(_ , _) }
 
   def scalaIterWhileMax(col: Iterable[Byte]) = {
     var acc: Byte = 0
@@ -86,7 +84,7 @@ class IterationPerformanceSpec extends FreeSpec
     with OneInstancePerTest
     with matchers.ShouldMatchers {
 
-  val NUM_JVM_WARMUP_TRIALS = 100
+  val NUM_JVM_WARMUP_TRIALS = 500
   val NUM_TIMED_TRIALS = 10
 
   import Collections._
