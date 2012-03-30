@@ -41,9 +41,9 @@ Here's a few steps to help you get started.
 
 2. Download SBT's sbt-launcher.
 
-3. Design a script to run the launcher like this one:
+3. Design a script to run the launcher like this one.
 
-.. code-block:: sh
+.. code-block::
 
    #!/bin/sh
 
