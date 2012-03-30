@@ -43,6 +43,8 @@ Here's a few steps to help you get started.
 
 3. Design a script to run the launcher like this one:
 
+.. code-block:: sh
+
     #!/bin/sh
 
 
