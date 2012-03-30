@@ -46,7 +46,7 @@ Here's a few steps to help you get started.
 4. Run the script, which gets you into a very nice console from which you can
    execute useful commands like "compile", "test", "run", "doc", and "console".
 
-.. code-block:: sh
+.. code:: sh
 
    #!/bin/sh
 
