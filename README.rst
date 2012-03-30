@@ -41,9 +41,12 @@ Here's a few steps to help you get started.
 
 2. Download SBT's sbt-launcher.
 
-3. Design a script to run the launcher like this one.
+3. Design a script to run the launcher like the one below.
 
-.. code-block:: python
+4. Run the script, which gets you into a very nice console from which you can
+   execute useful commands like "compile", "test", "run", "doc", and "console".
+
+.. code-block:: sh
 
    #!/bin/sh
 
@@ -61,9 +64,6 @@ Here's a few steps to help you get started.
 
 
    $JAVA_BIN $JAVA_OPTS -jar "$SBT_JAR" $@
-
-4. Run the script, which gets you into a very nice console from which you can
-   execute useful commands like "compile", "test", "run", "doc", and "console".
 
 But really, you shouldn't need all this fanciness to follow along.  Just
 reading the code will probably suffice.
