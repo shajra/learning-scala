@@ -24,7 +24,7 @@ complete discussions to single files so they read more like short articles.
 
 This project builds with [SBT](https://github.com/harrah/xsbt), which is
 extremely powerful and for simple projects like this one pretty easy to use.
-The documentation for SBT is pretty good now, so see [SBT's Getting Starting
+The documentation for SBT much improved now, so see [SBT's Getting Starting
 Guide](https://github.com/harrah/xsbt/wiki/Getting-Started-Welcome) for details
 on running the tool.
 
@@ -36,7 +36,7 @@ Here's a few steps to help you get started.
 
 1. Make sure you have a late edition JDK installed.
 
-2. Download SBT's sbt-launcher.
+2. Download [SBT's sbt-launcher](http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch).
 
 3. Design a script to run the launcher like the one below.
 
