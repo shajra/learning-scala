@@ -35,8 +35,14 @@ from the public internet (include the Scala compiler and core libraries).
 Here's a few steps to help you get started.
 
 1. Make sure you have a late edition JDK installed.
+
 2. Download SBT's sbt-launcher.
+
 3. Design a script to run the launcher like the one below.
+
+4. Run the script, which gets you into a very nice console from which you can
+   execute useful commands like "compile", "test", "run", "doc", and "console".
+
 ```sh
    #!/bin/sh
 
@@ -55,9 +61,6 @@ Here's a few steps to help you get started.
 
    $JAVA_BIN $JAVA_OPTS -jar "$SBT_JAR" $@
 ```
-4. Run the script, which gets you into a very nice console from which you can
-   execute useful commands like "compile", "test", "run", "doc", and "console".
-
 
 But really, you shouldn't need all this fanciness to follow along.  Just
 reading the code will probably suffice.
