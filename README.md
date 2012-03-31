@@ -49,14 +49,12 @@ Here's a few steps to help you get started.
 
 
 JAVA_BIN="$HOME/opt/jdk/jdk7/bin/java"
-
 JAVA_OPTS="
    -Xmx2048M
    -XX:MaxPermSize=350m
    -XX:+CMSClassUnloadingEnabled
    -XX:+DoEscapeAnalysis
 "
-
 SBT_JAR="$HOME/opt/sbt/sbt-launch.jar"
 
 
