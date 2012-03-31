@@ -40,26 +40,27 @@ Here's a few steps to help you get started.
 
 3. Design a script to run the launcher like the one below.
 
-4. Run the script, which gets you into a very nice console from which you can
-   execute useful commands like "compile", "test", "run", "doc", and "console".
+4. Run the script from the root of this project.  This will gets you into a
+   very nice console from which you can execute useful commands like "compile",
+   "test", "run", "doc", and "console".
 
 ```sh
-   #!/bin/sh
+#!/bin/sh
 
 
-   JAVA_BIN="$HOME/opt/jdk/jdk7/bin/java"
+JAVA_BIN="$HOME/opt/jdk/jdk7/bin/java"
 
-   JAVA_OPTS="
-       -Xmx2048M
-       -XX:MaxPermSize=350m
-       -XX:+CMSClassUnloadingEnabled
-       -XX:+DoEscapeAnalysis
-   "
+JAVA_OPTS="
+   -Xmx2048M
+   -XX:MaxPermSize=350m
+   -XX:+CMSClassUnloadingEnabled
+   -XX:+DoEscapeAnalysis
+"
 
-   SBT_JAR="$HOME/opt/sbt/sbt-launch.jar"
+SBT_JAR="$HOME/opt/sbt/sbt-launch.jar"
 
 
-   $JAVA_BIN $JAVA_OPTS -jar "$SBT_JAR" $@
+$JAVA_BIN $JAVA_OPTS -jar "$SBT_JAR" $@
 ```
 
 But really, you shouldn't need all this fanciness to follow along.  Just
