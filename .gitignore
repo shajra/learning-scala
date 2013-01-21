@@ -1,1 +1,27 @@
+# build artifacts
+
 target/
+
+
+# IDE artifacts
+
+.classpath
+.project
+.settings/
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+out/
+
+
+# text editting artifacts
+
+.swo
+.swp
+.*.swo
+.*.swp
+tags
+TAGS
