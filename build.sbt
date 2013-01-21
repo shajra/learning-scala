@@ -23,3 +23,9 @@ scalacOptions ++= Seq(
   "-optimize",
   "-Xlint"
 )
+
+fork in run := true
+
+javaOptions in run <++= (fullClasspath in Runtime) map { cp =>
+  Seq("-cp", sbt.Build.data(cp).mkString(":"))
+}
