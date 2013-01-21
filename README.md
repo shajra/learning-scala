@@ -22,8 +22,8 @@ There are a few modules designed for reuse, but in general, I've tried to map
 complete discussions to single files so they read more like short articles.
 
 However, this project is not a tutorial.  It's not designed to teach any kind
-of cirruculum.  It's just a diverse collection of things I found interesting
-and wrote up.
+of cirruculum.  It's just a assortment of things I found interesting and wrote
+up.
 
 
 Using This Project
