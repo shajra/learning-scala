@@ -8,7 +8,6 @@ package com.github.shajra.learning.scala
   */
 package object curryhoward
 
-
 package curryhoward {
 
   /** Types that correspond to useful and interesting first order logic. */
@@ -26,7 +25,6 @@ package curryhoward {
     }
 
   }
-
 
   /** Implementations that "prove" the theorems stated in the type signature.
     *
