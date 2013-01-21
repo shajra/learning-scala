@@ -6,9 +6,9 @@ package com.github.shajra.learning.scala
   * These problems were designed by
   * [[http://apocalisp.wordpress.com/ Rúnar Óli Bjarnason.]]
   */
-package object curryhoward
+package object curry_howard
 
-package curryhoward {
+package curry_howard {
 
   /** Types that correspond to useful and interesting first order logic. */
   object Logic {
