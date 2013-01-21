@@ -20,8 +20,8 @@ scalacOptions ++= Seq(
   "-language:higherKinds",
   "-language:implicitConversions",
   "-language:postfixOps",
-  "-optimize",
-  "-Xlint"
+  "-optimize"
+  //"-Xlint"
 )
 
 fork in run := true
