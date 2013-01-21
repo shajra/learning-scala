@@ -1,6 +1,6 @@
-name := "learning-scala"
-
 organization := "com.github.shajra"
+
+name := "learning-scala"
 
 version := "0.1.0-SNAPSHOT"
 
