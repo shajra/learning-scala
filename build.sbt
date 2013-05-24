@@ -9,10 +9,16 @@ libraryDependencies ++= Seq(
   "com.google.guava" % "guava" % "14.0-rc1",
   "com.typesafe.akka" %% "akka-actor" % "2.1.0",
   "org.functionaljava" % "functionaljava" % "3.0",
-  "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+  "org.scalacheck" %% "scalacheck" % "1.10.0" % "test",
+  "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+  "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+  "org.scalaz" %% "scalaz-concurrent" % "7.0.0-M9",
+  "org.scalaz" %% "scalaz-core" % "7.0.0-M9",
+  "org.scalaz" %% "scalaz-effect" % "7.0.0-M9",
+  "org.scalaz" %% "scalaz-typelevel" % "7.0.0-M9"
 )
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.10.1"
 
 scalacOptions ++= Seq(
   "-deprecation",

@@ -1,4 +1,5 @@
-package com.github.shajra.learning.scala.performance
+package com.github.shajra.learning.scala
+package performance
 
 
 import akka.util.ByteString
