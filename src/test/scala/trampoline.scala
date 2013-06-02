@@ -26,6 +26,24 @@ class TrampolineSpec extends FreeSpec with ShouldMatchers {
 
     }
 
+    "Scala's standard Future can overflow stack" in {
+
+      import concurrent.Future
+      import concurrent.ExecutionContext.Implicits.global
+
+      import concurrent.Await.result
+      import concurrent.duration._
+
+      def triangle(n: Int): Future[Int] =
+        if (n < 2) Future(n)
+        else triangle(n - 1) map { _ + n }
+
+      result(triangle(SmallSize), 1 millis) should be (safeTriangle(SmallSize))
+
+      intercept[StackOverflowError] { triangle(LargeSize) }
+
+    }
+
     "can implement with ScalaZ's Trampoline" in {
 
       import scalaz.std.function._
